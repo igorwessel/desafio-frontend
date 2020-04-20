@@ -1,18 +1,15 @@
 import styled from "styled-components";
-import { fontcolors } from './styles/colors'
+import { fontcolors } from "./styles/colors";
 
-
-
-export const Container = styled.div`
-`;
+export const Container = styled.div``;
 
 export const Header = styled.header`
   display: flex;
   flex-direction: column;
   color: ${fontcolors.primary};
   border-bottom: 1px solid white;
-  margin: 0 30px;
-`
+  /* margin: 0 30px; */
+`;
 
 export const Title = styled.h1`
   font-size: 3.8em;
@@ -27,7 +24,7 @@ export const Input = styled.input`
   margin-bottom: 70px;
   outline: 0;
   color: ${fontcolors.primary};
-`
+`;
 
 export const InputContainer = styled.div`
   position: relative;
@@ -36,3 +33,5 @@ export const InputContainer = styled.div`
   align-items: center;
   flex-direction: row;
 `;
+
+export const Main = styled.main``;
