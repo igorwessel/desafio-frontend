@@ -1,5 +1,6 @@
-import React from "react";
-import { MdClose, MdArrowUpward, MdArrowDownward } from "react-icons/md";
+import React from 'react';
+import { connect } from 'react-redux';
+import { MdClose, MdArrowUpward, MdArrowDownward } from 'react-icons/md';
 import {
   Card,
   CardClose,
@@ -13,74 +14,86 @@ import {
   CardWeek,
   CardWeekDay,
   CardWeekDayTemperature,
-} from "./styled";
+} from './styled';
+import { closeCardWeather } from '../../reducers/ui/action-creators';
 
-const CityWeather = () => {
+const CityWeather = ({ forecast, closeCardWeather }) => {
+  const week = {
+    mon: 'Segunda',
+    tue: 'Terça',
+    wed: 'Quarta',
+    thu: 'Quinta',
+    fri: 'Sexta',
+    sat: 'Sabado',
+    sun: 'Domingo',
+  };
+
   return (
     <Card>
       <CardClose>
-        <TextBold>Niterói, RJ - Brasil</TextBold>
-        <MdClose size={24} color="#fe7e00" />
+        <TextBold>
+          {forecast.location.city}, {forecast.location.region} -{' '}
+          {forecast.location.country}
+        </TextBold>
+        <MdClose
+          size={24}
+          color="#fe7e00"
+          onClick={closeCardWeather}
+          style={{ cursor: 'pointer' }}
+        />
       </CardClose>
-      <CardTitle>20°C Nublado</CardTitle>
+      <CardTitle>
+        {forecast.current_observation.condition.temperature}°C Nublado
+      </CardTitle>
       <CardWeatherDetails>
         <CardDetailsTemperature>
           <MdArrowDownward size={24} color="#fe7e00" />
-          <TextBoldWithPadding>16°</TextBoldWithPadding>
+          <TextBoldWithPadding>
+            {forecast.forecasts[0].low}°
+          </TextBoldWithPadding>
           <MdArrowUpward size={24} color="#fe7e00" />
-          <TextBoldWithPadding>25°</TextBoldWithPadding>
+          <TextBoldWithPadding>
+            {forecast.forecasts[0].high}°
+          </TextBoldWithPadding>
           <TextPadding>
-            Sensação <TextBold>19°</TextBold>
+            Sensação{' '}
+            <TextBold>{forecast.current_observation.wind.chill}°</TextBold>
           </TextPadding>
         </CardDetailsTemperature>
         <CardDetailsTemperature>
           <TextPadding>
-            Vento <TextBold>18km/h</TextBold>
+            Vento{' '}
+            <TextBold>{forecast.current_observation.wind.speed}km/h</TextBold>
           </TextPadding>
           <TextPadding>
-            Humidade <TextBold>89%</TextBold>
+            Humidade{' '}
+            <TextBold>
+              {forecast.current_observation.atmosphere.humidity}%
+            </TextBold>
           </TextPadding>
         </CardDetailsTemperature>
       </CardWeatherDetails>
       <CardWeek>
-        <CardWeekDay>
-          <TextBold>Terça</TextBold>
-          <CardWeekDayTemperature>
-            <TextBoldMargin>18°</TextBoldMargin>
-            <TextBoldMargin>26°</TextBoldMargin>
-          </CardWeekDayTemperature>
-        </CardWeekDay>
-        <CardWeekDay>
-          <TextBold>Quarta</TextBold>
-          <CardWeekDayTemperature>
-            <TextBoldMargin>18°</TextBoldMargin>
-            <TextBoldMargin>26°</TextBoldMargin>
-          </CardWeekDayTemperature>
-        </CardWeekDay>
-        <CardWeekDay>
-          <TextBold>Quinta</TextBold>
-          <CardWeekDayTemperature>
-            <TextBoldMargin>18°</TextBoldMargin>
-            <TextBoldMargin>26°</TextBoldMargin>
-          </CardWeekDayTemperature>
-        </CardWeekDay>
-        <CardWeekDay>
-          <TextBold>Sexta</TextBold>
-          <CardWeekDayTemperature>
-            <TextBoldMargin>18°</TextBoldMargin>
-            <TextBoldMargin>26°</TextBoldMargin>
-          </CardWeekDayTemperature>
-        </CardWeekDay>
-        <CardWeekDay>
-          <TextBold>Sabado</TextBold>
-          <CardWeekDayTemperature>
-            <TextBoldMargin>18°</TextBoldMargin>
-            <TextBoldMargin>26°</TextBoldMargin>
-          </CardWeekDayTemperature>
-        </CardWeekDay>
+        {forecast.forecasts.slice(1, 6).map((forecast, index) => (
+          <CardWeekDay key={`${forecast.day.toLowerCase()}_${index}`}>
+            <TextBold>{week[forecast.day.toLowerCase()]}</TextBold>
+            <CardWeekDayTemperature>
+              <TextBoldMargin>{forecast.low}°</TextBoldMargin>
+              <TextBoldMargin>{forecast.high}°</TextBoldMargin>
+            </CardWeekDayTemperature>
+          </CardWeekDay>
+        ))}
       </CardWeek>
     </Card>
   );
 };
 
-export default CityWeather;
+const mapStateToProps = (state) => ({
+  forecast: state.forecast,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  closeCardWeather: () => dispatch(closeCardWeather()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CityWeather);

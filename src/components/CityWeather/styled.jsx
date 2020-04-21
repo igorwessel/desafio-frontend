@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { fontcolors } from "../../styles/colors";
+import styled from 'styled-components';
+import { fontcolors } from '../../styles/colors';
 
 export const Card = styled.div`
   display: flex;
@@ -49,6 +49,7 @@ export const CardDetailsTemperature = styled.div`
 
 export const CardWeek = styled.div`
   display: flex;
+  justify-content: center;
   margin: 10px 0;
 `;
 
