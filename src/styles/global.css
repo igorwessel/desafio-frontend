@@ -11,3 +11,7 @@ body {
   background: linear-gradient(to bottom, #fe7e00 0%, #ffbb00 100%);
   min-height: 100vh;
 }
+
+#root {
+  width: 100%;
+}

@@ -4,7 +4,7 @@ import { fontcolors } from '../../styles/colors';
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 35px;
+  padding: 7%;
   background: rgba(255, 255, 255, 0.932);
 `;
 

@@ -1,8 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const Table = styled.table`
-  margin: 8px auto;
-`;
+export const Table = styled.table``;
 
 export const TableTitle = styled.caption`
   margin-right: 100%;

@@ -40,7 +40,7 @@ const App = ({ updateForecast, openCardWeather, ui }) => {
             size={32}
             style={{
               position: 'absolute',
-              right: '8%',
+              right: '185px',
               top: '30px',
               cursor: 'pointer',
             }}
